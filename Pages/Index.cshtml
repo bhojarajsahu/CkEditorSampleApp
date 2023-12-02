@@ -1,0 +1,220 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<style>
+    .editor-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    position: relative;
+    width: 500px;
+}
+
+    .sidebar-container {
+        position: relative;
+        width: 20%;
+        overflow: hidden;
+        background: var(--ck-color-toolbar-background);
+        border: 1px solid var(--ck-color-toolbar-border);
+        margin-left: -1px;
+    }
+
+</style>
+
+<div class="text-center" onload="CreateCkEditor()">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <button onclick="CreateCkEditor()">Clickhere</button>
+                <div id="ck-editor-container-alert-create">
+                    <div id="presence-list-container"></div>
+                    <div class="editor-container">
+                        <div class="row row-presence">
+                            <div class="presence"></div>
+                        </div>
+                        <div id="ck-editor" style="width:100% !important;"></div>
+                        <div class="sidebar-container" id="ck-editor-sidebar-container"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function CreateCkEditor() {
+        console.log("Loading...");
+        CKSource.Editor
+            .create(document.querySelector('#ck-editor-container-alert-create #ck-editor'), {
+                initialData: "", //this.currentAlertItem.description,
+                // plugins: [ Indent, IndentBlock, SimpleUploadAdapter],
+                //extraPlugins: [UsersIntegration, CommentsAdapter],
+                // licenseKey: 'kesHBHU4SClugDPK3+YkPmB7vMaAVFBH30YKQ+B5ne99XrF+K++yKqRxUg==' -- Mohan,
+                // licenseKey: 'ALUrd7kAxSGwyr3sSrneFCyTiLD1jPJJQdasMITd95DfqNaJYj+44ZQghQ==', // Shrikanth
+                licenseKey: 'TmIyMWV6b1RibWhEb1JrY2FCRld3YmVEVVVUaXc5M3l2VEcxMy9PRy84Z3VLVDd1SmhXMDNBPT0tTWpBeU5EQTNNVE09', // Amit
+                sidebar: {
+                    container: document.querySelector('#ck-editor-container-alert-create #ck-editor-sidebar-container')
+                },
+                cloudServices: {
+                    tokenUrl: 'https://98852.cke-cs.com/token/dev/c7be6758763fae100bd0891c29e664506a46bcc6ea6f09dd2932eb1bae88?limit=10',
+                    uploadUrl: 'https://98852.cke-cs.com/easyimage/upload/',
+                    webSocketUrl: 'wss://98852.cke-cs.com/ws'
+                },
+                presenceList: {
+                    container: document.querySelector('#presence-list-container')
+                },
+                collaboration: {
+                    channelId: '1234567890'
+                },
+                fontColor: {
+                    colorPicker: {
+                        // Use 'hex' format for output instead of 'hsl'.
+                        format: 'hex'
+                    }
+                },
+                fontBackgroundColor: this.customColorPalette,
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Calibri, Geneva, sans-serif',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ]
+                },
+                
+                //toolbar: {
+                //    items: ['findAndReplace', 'selectAll', '|',
+                //        'heading', '|',
+                //        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                //        'bulletedList', 'numberedList', 'todoList', '|',
+                //        'outdent', 'indent', '|',
+                //        'undo', 'redo',
+                //        '-',
+                //        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                //        'alignment', '|',
+                //        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                //        'specialCharacters', 'horizontalLine', 'pageBreak', '|']
+                //},
+                link: {
+                    decorators: {
+                        openInNewTab: {
+                            mode: 'manual',
+                            label: 'Open in a new tab',
+                            defaultValue: true,
+                            attributes: {
+                                target: '_blank',
+                                rel: 'noopener noreferrer'
+                            }
+                        }
+                    }
+                },
+                table: {
+
+                    contentToolbar: [
+                        'tableColumn', 'tableRow', 'mergeTableCells',
+                        'tableProperties', 'tableCellProperties'
+                    ],
+                    tableProperties: {
+                        // The default styles for tables in the editor.
+                        // They should be synchronized with the content styles.
+                        defaultProperties: {
+                            borderStyle: 'dashed',
+                            borderColor: '#000000',
+                            borderWidth: '4px',
+                            alignment: 'left',
+                            width: '90%',
+                            height: '350px'
+                        },
+                        borderColors: this.customColorPalette,
+                        backgroundColors: this.customColorPalette,
+                        // The default styles for table cells in the editor.
+                        // They should be synchronized with the content styles.
+                    },
+                    tableCellProperties: {
+                        defaultProperties: {
+                            borderStyle: 'solid',
+                            borderColor: '#000000',
+                            borderWidth: '3px',
+                            horizontalAlignment: 'center',
+                            verticalAlignment: 'bottom',
+                            padding: '10px'
+                        },
+                        borderColors: this.customColorPalette,
+                        backgroundColors: this.customColorPalette
+                    }
+                },
+                indentBlock: {
+                    classes: [
+                        'custom-block-indent-a', // First step - smallest indentation.
+                        'custom-block-indent-b',
+                        'custom-block-indent-c'  // Last step - biggest indentation.
+                    ]
+                }
+                //,
+                //simpleUpload: {
+                //    // Feature configuration.
+                //    // The URL that the images are uploaded to.
+                //    uploadUrl: window.location.origin + '/News/DocUploadImage',
+
+                //    // Enable the XMLHttpRequest.withCredentials property.
+                //    withCredentials: true,
+                //}
+            })
+            .then(editor => {
+                // After the editor is initialized, add an action to be performed after a button is clicked.
+                /*                    const trackChanges = editor.plugins.get('TrackChanges');*/
+                this.ckEditor = editor;
+
+                // // Get the data on demand.
+                // document.querySelector( '#create-alert-button' ).addEventListener( 'click', () => {
+                //   this.createAlert();
+                // });
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+       
+    }
+</script>
